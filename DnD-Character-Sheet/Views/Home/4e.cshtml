@@ -23,6 +23,13 @@
     // Misc
     int halfLevel = (Model.Level ?? 0) / 2;
 
+    int strModPlusHalfLevel = strMod + halfLevel;
+    int conModPlusHalfLevel = conMod + halfLevel;
+    int dexModPlusHalfLevel = dexMod + halfLevel;
+    int intModPlusHalfLevel = intMod + halfLevel;
+    int wisModPlusHalfLevel = wisMod + halfLevel;
+    int chaModPlusHalfLevel = chaMod + halfLevel;
+
     // Calculated values
     int initiative = dexMod + halfLevel + Model.MiscInitiativeModifier ?? 0;
 
@@ -44,8 +51,8 @@
             </div>
             <div class="col-4" >
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="playerName" placeholder="Player Name" asp-for="PlayerName"/>
-                    <label for="floatingInput" >Player Name</label>
+                    <input type="text" class="form-control" placeholder="Player Name" asp-for="PlayerName"/>
+                    <label for="PlayerName">Player Name</label>
                 </div>
             </div>
         </div>
@@ -132,7 +139,7 @@
                     <h6 class="text-center text-white">INITIATIVE</h6>
                 </div>
 
-                <table class="table table-borderless table-sm">
+                <table class="table table-borderless table-sm mb--1">
                     <tbody>
                         <tr>
                             <th class="text-center pb-0" style="width: 18%">
@@ -177,6 +184,9 @@
                     </tbody>
                 </table>
 
+                <label for="ConditionalInitiativeModifiers" class="very-tiny-label">Conditional Modifiers</label>
+                <input type="text" class="form-control p-0 mb-1" style="margin-top: -5px" asp-for="ConditionalInitiativeModifiers" />
+
                 <div class="bg-dark mb--2">
                     <h6 class="text-center text-white">ABILITY SCORES</h6>
                 </div>
@@ -184,41 +194,79 @@
                 <table class="table table-borderless table-sm">
                     <tbody>
                         <tr>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 20%">
                                 <small class="very-tiny-label">SCORE</small>
                             </th>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 20%">
                                 <small class="very-tiny-label">ABILITY</small>
                             </th>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 2%">
 
                             </th>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 28%">
                                 <small class="very-tiny-label">ABILITY MOD</small>
                             </th>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 2%">
 
                             </th>
-                            <th class="text-center pb-0">
+                            <th class="text-center pb-0" style="width: 28%">
                                 <small class="very-tiny-label">MOD + 1/2 LVL</small>
                             </th>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="table-dark">
                                 <input type="number" class="form-control p-0 text-center" asp-for="Strength" />
                             </td>
-                            <td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb--1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;STR</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Strength</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
 
                             </td>
-                            <td>
+                            <td class="text-center table-secondary">
+                                <input type="number" id="str-mod" class="form-control p-0 text-center w-50 d-inline str-output" value="@strMod" />
+                            </td>
+                            <td class="table-secondary">
 
                             </td>
-                            <td>
-
+                            <td class="text-center table-secondary">
+                                <input type="number" id="str-mod-plus-half-level" class="form-control p-0 text-center w-50 d-inline str-output" value="@strModPlusHalfLevel" />
                             </td>
-                            <td>
+                        </tr>
+                        <tr>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                        </tr>
+                        <tr>
+                            <td class="table-dark">
+                                <input type="number" class="form-control p-0 text-center" asp-for="Constitution" />
                             </td>
-                            <td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb--1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;CON</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Constitution</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" id="con-mod" class="form-control p-0 text-center w-50 d-inline" value="@conMod" />
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" id="con-mod-plus-half-level" class="form-control p-0 text-center w-50 d-inline" value="@conModPlusHalfLevel" />
                             </td>
                         </tr>
                     </tbody>

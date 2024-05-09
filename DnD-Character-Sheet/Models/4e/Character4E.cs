@@ -19,6 +19,7 @@
         public string? Deity { get; set; }
         public string? Affiliation { get; set; }
         public int? MiscInitiativeModifier { get; set; }
+        public string? ConditionalInitiativeModifiers { get; set; }
         public int? Strength { get; set; }
         public int? Constitution { get; set; }
         public int? Dexterity { get; set; }
