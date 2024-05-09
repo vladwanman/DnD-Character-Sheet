@@ -1,0 +1,279 @@
+﻿@model Character4E
+
+@{
+    ViewData["Title"] = "Home Page";
+
+
+    // Get ability scores
+    int str = Model.Strength ?? 10;
+    int con = Model.Constitution ?? 10;
+    int dex = Model.Dexterity ?? 10;
+    int intel = Model.Intelligence ?? 10;
+    int wis = Model.Wisdom ?? 10;
+    int cha = Model.Charisma ?? 10;
+
+    // Get ability modifiers
+    int strMod = (str - 10) / 2;
+    int conMod = (con - 10) / 2;
+    int dexMod = (dex - 10) / 2;
+    int intMod = (intel - 10) / 2;
+    int wisMod = (wis - 10) / 2;
+    int chaMod = (cha - 10) / 2;
+
+    // Misc
+    int halfLevel = (Model.Level ?? 0) / 2;
+
+    // Calculated values
+    int initiative = dexMod + halfLevel + Model.MiscInitiativeModifier ?? 0;
+
+}
+
+<style>
+    #page-container {
+        max-width: 1000px;
+        margin: 0 auto; 
+    }
+</style>
+
+<div id="page-container" class="container">
+    <form asp-controller="Home" asp-action="CreateJson">
+
+        <div class="row mb-2">
+            <div class="col-8">
+                <h1>4th Edition Character Sheet</h1>
+            </div>
+            <div class="col-4" >
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="playerName" placeholder="Player Name" asp-for="PlayerName"/>
+                    <label for="floatingInput" >Player Name</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="CharacterName" />
+                <label for="characterName" class="tiny-label">Character Name</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="number" class="form-control mb--1 p-1 border-dark" asp-for="Level" />
+                <label for="Level" class="tiny-label">Level</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Class" />
+                <label for="Class" class="tiny-label">Class</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="ParagonPath" />
+                <label for="ParagonPath" class="tiny-label">Paragon Path</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="EpicDestiny" />
+                <label asp-for="EpicDestiny" class="tiny-label">Epic Destiny</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="number" class="form-control mb--1 p-1 border-dark" asp-for="TotalXP" />
+                <label asp-for="TotalXP" class="tiny-label">Total XP</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Race" />
+                <label asp-for="Race" class="tiny-label">Race</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Size" />
+                <label asp-for="Size" class="tiny-label">Size</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="number" class="form-control mb--1 p-1" asp-for="Age" />
+                <label asp-for="Age" class="tiny-label">Age</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Gender" />
+                <label asp-for="Gender" class="tiny-label">Gender</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Height" />
+                <label asp-for="Height" class="tiny-label">Height</label>
+            </div>
+
+            <div class="col-1 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Weight" />
+                <label asp-for="Weight" class="tiny-label">Weight</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Alignment" />
+                <label asp-for="Alignment" class="tiny-label">Alignment</label>
+            </div>
+
+            <div class="col-2 p-1">
+                <input type="text" class="form-control mb--1 p-1" asp-for="Deity" />
+                <label asp-for="Deity" class="tiny-label">Deity</label>
+            </div>
+        </div>
+
+        <div class="row">
+
+            @* First Column *@
+            <div class="col-4 ps-1">
+                <div class="bg-dark mb--2">
+                    <h6 class="text-center text-white">INITIATIVE</h6>
+                </div>
+
+                <table class="table table-borderless table-sm">
+                    <tbody>
+                        <tr>
+                            <th class="text-center pb-0" style="width: 18%">
+                                <small class="very-tiny-label">SCORE</small>
+                            </th>
+                            <th class="pb-0">
+
+                            </th>
+                            <th class="text-center pb-0" style="width: 13%">
+                                <small class="very-tiny-label">DEX</small>
+                            </th>
+                            <th class="text-start pb-0" style="width: 24%">
+                                <small class="very-tiny-label" style="margin-left: -7px">1/2 LEVEL</small>
+                            </th>
+                            <th class="pb-0">
+
+                            </th>
+                            <th class="text-center pb-0" style="width: 13%">
+                                <small class="very-tiny-label">MISC</small>
+                            </th>
+                        </tr>
+                        <tr class="table-dark p-0">
+                            <td>
+                                <input type="number" class="form-control p-0 text-center" value="@initiative" disabled />
+                            </td>
+                            <td style="width: 20%">
+                                <p class="mb-0 fw-bold">Initiative</p>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control p-0 text-center" value="@dexMod" disabled />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control w-50 p-0 text-center" value="@halfLevel" disabled />
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <input type="number" class="form-control p-0 text-center" asp-for="MiscInitiativeModifier" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="bg-dark mb--2">
+                    <h6 class="text-center text-white">ABILITY SCORES</h6>
+                </div>
+
+                <table class="table table-borderless table-sm">
+                    <tbody>
+                        <tr>
+                            <th class="text-center pb-0">
+                                <small class="very-tiny-label">SCORE</small>
+                            </th>
+                            <th class="text-center pb-0">
+                                <small class="very-tiny-label">ABILITY</small>
+                            </th>
+                            <th class="text-center pb-0">
+
+                            </th>
+                            <th class="text-center pb-0">
+                                <small class="very-tiny-label">ABILITY MOD</small>
+                            </th>
+                            <th class="text-center pb-0">
+
+                            </th>
+                            <th class="text-center pb-0">
+                                <small class="very-tiny-label">MOD + 1/2 LVL</small>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="number" class="form-control p-0 text-center" asp-for="Strength" />
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            @* Second Column *@
+            <div class="col-4 px-1">
+                <div class="bg-dark">
+                    <h6 class="text-center text-white">DEFENSES</h6>
+                </div>
+
+            </div>
+
+            @* Third Column *@
+            <div class="col-4 px-1">
+                <div class="bg-dark">
+                    <h6 class="text-center text-white">MOVEMENT</h6>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary mt-4">Export Character</button>
+
+    </form>
+
+    <form enctype="multipart/form-data" asp-controller="Home" asp-action="ReadCharacter" class="mt-3">
+
+        <h3>Import a character</h3>
+
+        <div class="input-group mb-3">
+            <input type="file" id="jsonFile" name="jsonFile" accept=".json" class="form-control" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Import Character</button>
+            </div>
+        </div>
+
+        
+
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+
+
+
+        });
+
+    </script>
+}

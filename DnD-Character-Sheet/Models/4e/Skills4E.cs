@@ -1,0 +1,20 @@
+﻿public enum Skills4E
+{
+    Acrobatics,
+    Arcana,
+    Athletics,
+    Bluff,
+    Diplomacy,
+    Dungeoneering,
+    Endurance,
+    Heal,
+    History,
+    Insight,
+    Intimidate,
+    Nature,
+    Perception,
+    Religion,
+    Stealth,
+    Streetwise,
+    Thievery
+}
