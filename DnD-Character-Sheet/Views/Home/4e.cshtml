@@ -32,6 +32,8 @@
 
     // Calculated values
     int initiative = dexMod + halfLevel + Model.MiscInitiativeModifier ?? 0;
+    int bloodiedHp = Model.MaxHitPoints ?? 0 / 2;
+    int surgeValue = Model.MaxHitPoints ?? 0 / 4;
 
 }
 
@@ -59,74 +61,74 @@
 
         <div class="row">
             <div class="col-3 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="CharacterName" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="CharacterName" />
                 <label for="characterName" class="tiny-label">Character Name</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="number" class="form-control mb--1 p-1 border-dark" asp-for="Level" />
+                <input type="number" class="form-control mb-n1 p-1 border-dark calculable-input" asp-for="Level" />
                 <label for="Level" class="tiny-label">Level</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Class" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Class" />
                 <label for="Class" class="tiny-label">Class</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="ParagonPath" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="ParagonPath" />
                 <label for="ParagonPath" class="tiny-label">Paragon Path</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="EpicDestiny" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="EpicDestiny" />
                 <label asp-for="EpicDestiny" class="tiny-label">Epic Destiny</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="number" class="form-control mb--1 p-1 border-dark" asp-for="TotalXP" />
+                <input type="number" class="form-control mb-n1 p-1 border-dark" asp-for="TotalXP" />
                 <label asp-for="TotalXP" class="tiny-label">Total XP</label>
             </div>
         </div>
 
         <div class="row">
             <div class="col-3 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Race" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Race" />
                 <label asp-for="Race" class="tiny-label">Race</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Size" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Size" />
                 <label asp-for="Size" class="tiny-label">Size</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="number" class="form-control mb--1 p-1" asp-for="Age" />
+                <input type="number" class="form-control mb-n1 p-1" asp-for="Age" />
                 <label asp-for="Age" class="tiny-label">Age</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Gender" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Gender" />
                 <label asp-for="Gender" class="tiny-label">Gender</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Height" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Height" />
                 <label asp-for="Height" class="tiny-label">Height</label>
             </div>
 
             <div class="col-1 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Weight" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Weight" />
                 <label asp-for="Weight" class="tiny-label">Weight</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Alignment" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Alignment" />
                 <label asp-for="Alignment" class="tiny-label">Alignment</label>
             </div>
 
             <div class="col-2 p-1">
-                <input type="text" class="form-control mb--1 p-1" asp-for="Deity" />
+                <input type="text" class="form-control mb-n1 p-1" asp-for="Deity" />
                 <label asp-for="Deity" class="tiny-label">Deity</label>
             </div>
         </div>
@@ -134,12 +136,14 @@
         <div class="row">
 
             @* First Column *@
-            <div class="col-4 ps-1">
-                <div class="bg-dark mb--2">
+            <div class="col-4 px-1">
+
+                @* Initiative *@
+                <div class="bg-dark mb-n3">
                     <h6 class="text-center text-white">INITIATIVE</h6>
                 </div>
 
-                <table class="table table-borderless table-sm mb--1">
+                <table class="table table-borderless table-sm mb-n1">
                     <tbody>
                         <tr>
                             <th class="text-center pb-0" style="width: 18%">
@@ -178,47 +182,49 @@
 
                             </td>
                             <td>
-                                <input type="number" class="form-control p-0 text-center" asp-for="MiscInitiativeModifier" />
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="MiscInitiativeModifier" />
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <label for="ConditionalInitiativeModifiers" class="very-tiny-label">Conditional Modifiers</label>
-                <input type="text" class="form-control p-0 mb-1" style="margin-top: -5px" asp-for="ConditionalInitiativeModifiers" />
+                <label asp-for="ConditionalInitiativeModifiers" class="very-tiny-label ms-2 bg-white">Conditional Modifiers</label>
+                <input type="text" class="form-control p-0 mb-1 mt-n2" style="margin-top: -5px" asp-for="ConditionalInitiativeModifiers" />
 
-                <div class="bg-dark mb--2">
+                @* Ability Scores *@
+                <div class="bg-dark mb-n3">
                     <h6 class="text-center text-white">ABILITY SCORES</h6>
                 </div>
 
-                <table class="table table-borderless table-sm">
+                <table class="table table-borderless table-sm mb-2">
                     <tbody>
                         <tr>
-                            <th class="text-center pb-0" style="width: 20%">
-                                <small class="very-tiny-label">SCORE</small>
+                            <th class="text-center pt-2 pb-0" style="width: 20%">
+                                <div class="very-tiny-label">SCORE</div>
                             </th>
-                            <th class="text-center pb-0" style="width: 20%">
-                                <small class="very-tiny-label">ABILITY</small>
+                            <th class="text-center pt-2 pb-0" style="width: 20%">
+                                <div class="very-tiny-label">ABILITY</div>
                             </th>
-                            <th class="text-center pb-0" style="width: 2%">
+                            <th class="text-center pt-2 pb-0" style="width: 2%">
 
                             </th>
-                            <th class="text-center pb-0" style="width: 28%">
-                                <small class="very-tiny-label">ABILITY MOD</small>
+                            <th class="text-center pt-2 pb-0" style="width: 28%">
+                                <div class="very-tiny-label">ABILITY MOD</div>
                             </th>
-                            <th class="text-center pb-0" style="width: 2%">
+                            <th class="text-center pt-2 pb-0" style="width: 2%">
 
                             </th>
-                            <th class="text-center pb-0" style="width: 28%">
-                                <small class="very-tiny-label">MOD + 1/2 LVL</small>
+                            <th class="text-center pt-2 pb-0" style="width: 28%">
+                                <div class="very-tiny-label">MOD + 1/2 LVL</div>
                             </th>
                         </tr>
+                        @* Strength *@
                         <tr>
                             <td class="table-dark">
-                                <input type="number" class="form-control p-0 text-center" asp-for="Strength" />
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Strength" />
                             </td>
                             <td class="py-0 table-dark">
-                                <div class="align-middle mb--1" style="margin-top: -2px">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
                                     <p class="fw-bold mb-0">&nbsp;STR</p>
                                 </div>
                                 <div>
@@ -229,13 +235,13 @@
 
                             </td>
                             <td class="text-center table-secondary">
-                                <input type="number" id="str-mod" class="form-control p-0 text-center w-50 d-inline str-output" value="@strMod" />
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline str-mod" value="@strMod" disabled />
                             </td>
                             <td class="table-secondary">
 
                             </td>
                             <td class="text-center table-secondary">
-                                <input type="number" id="str-mod-plus-half-level" class="form-control p-0 text-center w-50 d-inline str-output" value="@strModPlusHalfLevel" />
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline str-mod-plus-half-level" value="@strModPlusHalfLevel" disabled />
                             </td>
                         </tr>
                         <tr>
@@ -246,12 +252,13 @@
                             <td class="pt-0"></td>
                             <td class="pt-0"></td>
                         </tr>
+                        @* Constitution *@
                         <tr>
                             <td class="table-dark">
-                                <input type="number" class="form-control p-0 text-center" asp-for="Constitution" />
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Constitution" />
                             </td>
                             <td class="py-0 table-dark">
-                                <div class="align-middle mb--1" style="margin-top: -2px">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
                                     <p class="fw-bold mb-0">&nbsp;CON</p>
                                 </div>
                                 <div>
@@ -261,12 +268,218 @@
                             <td class="table-secondary">
                             </td>
                             <td class="text-center table-secondary">
-                                <input type="number" id="con-mod" class="form-control p-0 text-center w-50 d-inline" value="@conMod" />
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline con-mod" value="@conMod" disabled />
                             </td>
                             <td class="table-secondary">
                             </td>
                             <td class="text-center table-secondary">
-                                <input type="number" id="con-mod-plus-half-level" class="form-control p-0 text-center w-50 d-inline" value="@conModPlusHalfLevel" />
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline con-mod-plus-half-level" value="@conModPlusHalfLevel" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        @* Dexterity *@
+                        <tr>
+                            <td class="table-dark">
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Dexterity" />
+                            </td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;DEX</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Dexterity</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline dex-mod" value="@dexMod" disabled />
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline dex-mod-plus-half-level" value="@conModPlusHalfLevel" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                        </tr>
+                        @* Intelligence *@
+                        <tr>
+                            <td class="table-dark">
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Intelligence" />
+                            </td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;INT</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Intelligence</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline int-mod" value="@intMod" disabled />
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline int-mod-plus-half-level" value="@intModPlusHalfLevel" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        @* Wisdom *@
+                        <tr>
+                            <td class="table-dark">
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Wisdom" />
+                            </td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;WIS</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Wisdom</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline wis-mod" value="@wisMod" disabled />
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline wis-mod-plus-half-level" value="@wisModPlusHalfLevel" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                            <td class="pt-0"></td>
+                        </tr>
+                        @* Charisma *@
+                        <tr>
+                            <td class="table-dark">
+                                <input type="number" class="form-control p-0 text-center calculable-input" asp-for="Charisma" />
+                            </td>
+                            <td class="py-0 table-dark">
+                                <div class="align-middle mb-n1" style="margin-top: -2px">
+                                    <p class="fw-bold mb-0">&nbsp;CHA</p>
+                                </div>
+                                <div>
+                                    <p class="very-tiny-label mb-0">Charisma</p>
+                                </div>
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline cha-mod" value="@chaMod" disabled />
+                            </td>
+                            <td class="table-secondary">
+                            </td>
+                            <td class="text-center table-secondary">
+                                <input type="number" class="form-control p-0 text-center w-50 d-inline cha-mod-plus-half-level" value="@chaModPlusHalfLevel" disabled />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @* HIT POINTS *@
+                <div class="bg-dark mb-n3 mt-0">
+                    <h6 class="text-center text-white">HIT POINTS</h6>
+                </div>
+
+                <table class="table table-borderless table-sm mb-2">
+                    <tbody>
+                        <tr style="height: 0px">
+                            <th class="text-center p-0" style="width: 21%">
+
+                            </th>
+                            <th class="text-center p-0" style="width: 23%">
+
+                            </th>
+                            <th class="text-center p-0" style="width: 23%">
+
+                            </th>
+                            <th class="text-center p-0" style="width: 23%">
+
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center pb-0">
+                                <small class="tiny-label">MAX HP</small>
+                            </th>
+                            <th class="text-center pb-0">
+
+                            </th>
+                            <th class="text-center pb-0" colspan="2">
+                                <small class="tiny-label">HEALING SURGES</small>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="number" class="form-control text-center fs-4 px-0" asp-for="MaxHitPoints" />
+                            </td>
+                            <td class="text-center py-0">
+                                <div class="very-tiny-label">BLOODIED</div>
+                                <input value="@bloodiedHp" class="form-control p-0 text-center d-inline mb-n3" disabled />
+                                <div class="very-tiny-label">1/2 HP</div>
+                            </td>
+                            <td class="text-center py-0">
+                                <div class="very-tiny-label">SURGE VALUE</div>
+                                <input asp-for="HealingSurgeValue" class="form-control p-0 text-center d-inline mb-n3" />
+                                <div class="very-tiny-label">1/4 HP</div>
+                            </td>
+                            <td class="text-center py-0">
+                                <div class="very-tiny-label">SURGES/DAY</div>
+                                <input asp-for="SurgesPerDay" class="form-control p-0 text-center d-inline mb-n3" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="py-0 ps-0">
+                                <div class="very-tiny-label ms-2"><span class="bg-white">CURRENT HIT POINTS</span></div>
+                                <input type="text" class="form-control fs-3 mt-n2 mb-0 text-center" asp-for="CurrentHitPoints" />
+                            </td>
+                            <td colspan="2" class="py-0 pe-0">
+                                <div class="text-end">
+                                    <div class="very-tiny-label text-end me-2"><span class="bg-white">CURRENT SURGE USES</span></div>
+                                </div>
+                                <input type="text" class="form-control fs-3 mt-n2 mb-0 text-center" asp-for="CurrentHealingSurges" />
+                            </td>
+                        </tr>
+                        <tr class="table-dark">
+                            <td colspan="3" class="p-0">
+                                <div class="very-tiny-label text-end pb-0 pe-2" style="padding-top: 1px">
+                                    SECOND WIND 1/ENCOUNTER USED
+                                </div>
+                            </td>
+                            <td class="p-0">
+                                <div class="d-flex h-auto">
+                                    <input style="height: 16px" class="" type="checkbox" asp-for="EncounterSecondWindUsed" />
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -287,6 +500,14 @@
                 <div class="bg-dark">
                     <h6 class="text-center text-white">MOVEMENT</h6>
                 </div>
+
+                @* Languages *@
+
+                <input type="hidden" asp-for="Languages"/>
+
+                <ul id="languages" class="list-group">
+
+                </ul>
 
             </div>
         </div>
@@ -319,7 +540,96 @@
 
         $(document).ready(function () {
 
+            // Update all data
+            $(".calculable-input").on("change", updateValues);
 
+            updateValues();
+
+            function updateValues() {
+				var str = $("#Strength").val();
+                var con = $("#Constitution").val();
+                var dex = $("#Dexterity").val();
+                var int = $("#Intelligence").val();
+                var wis = $("#Wisdom").val();
+                var cha = $("#Charisma").val();
+
+                var strMod = Math.floor((str - 10) / 2);
+                var conMod = Math.floor((con - 10) / 2);
+                var dexMod = Math.floor((dex - 10) / 2);
+                var intMod = Math.floor((int - 10) / 2);
+                var wisMod = Math.floor((wis - 10) / 2);
+                var chaMod = Math.floor((cha - 10) / 2);
+
+                var halfLevel = Math.floor($("#Level").val() / 2);
+
+				$(".str-mod").val(strMod);
+				$(".con-mod").val(conMod);
+				$(".dex-mod").val(dexMod);
+				$(".int-mod").val(intMod);
+                $(".wis-mod").val(wisMod);
+                $(".cha-mod").val(chaMod);
+
+				$(".str-mod-plus-half-level").val(strMod + halfLevel);
+				$(".con-mod-plus-half-level").val(conMod + halfLevel);
+				$(".dex-mod-plus-half-level").val(dexMod + halfLevel);
+				$(".int-mod-plus-half-level").val(intMod + halfLevel);
+                $(".wis-mod-plus-half-level").val(wisMod + halfLevel);
+				$(".cha-mod-plus-half-level").val(chaMod + halfLevel);
+
+            }
+
+            // Languages
+            updateLanguages();
+
+            function updateLanguages() {
+				var languages = $("#Languages").val().split("|");
+				var languagesList = $("#languages");
+
+				languagesList.empty();
+
+				for (var i = 0; i < languages.length; i++) {
+					var language = languages[i];
+                    if(language.length == 0) continue;
+                    var li = $("<li>").text(language);
+                    li.addClass("list-group-item");
+					languagesList.append(li);
+				}
+                var group = $("<div>");
+                group.addClass("input-group");
+                var input = $("<input>");
+                input.addClass("form-control border-0");
+                input.attr("type", "text");
+                input.attr("placeholder", "Add a language");
+                group.append(input);
+
+                input.on("keypress", function (event) {
+                    if (!input.is(":focus")) return;
+
+                    if (event.key == "Enter") {
+                        event.preventDefault();
+						var language = input.val();
+						languages.push(language);
+						$("#Languages").val(languages.join("|"));
+						updateLanguages();
+					}
+                });
+
+                var button = $("<button>");
+                button.addClass("btn btn-outline-primary");
+                button.text("Add");
+                button.attr("type", "button");
+                button.on("click", function () {
+					var language = input.val();
+					languages.push(language);
+					$("#Languages").val(languages.join("|"));
+					updateLanguages();
+				});
+                group.append(button);
+                var li = $("<li>");
+                li.addClass("list-group-item p-0");
+				li.append(group);
+                languagesList.append(li);
+			}
 
         });
 

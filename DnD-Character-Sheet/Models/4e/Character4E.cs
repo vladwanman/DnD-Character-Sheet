@@ -28,9 +28,11 @@
         public int? Charisma { get; set; }
         public int? MaxHitPoints { get; set; }
         public int? CurrentHitPoints { get; set; }
+        public int? HealingSurgeValue { get; set; }
         public int? SurgesPerDay { get; set; }
+        public int? CurrentHealingSurges { get; set; }
         public int? TempHitPoints { get; set; }
-        public bool? SecondWindUsed { get; set; }
+        public bool EncounterSecondWindUsed { get; set; } = false;
         public int? DeathSavingThrowFailures { get; set; }
         public string? SavingThrowModifiers { get; set; }
         public string? Resistances { get; set; }
@@ -47,8 +49,19 @@
         public int? ActionPoints { get; set; }
         public List<string>? RaceFeatures { get; set; }
         public List<string>? OtherFeatures { get; set; }
-        public List<string>? Languages { get; set; }
-        public Speed? Speed { get; set; }
 
+        private List<string>? languages;
+        public string? Languages
+        {
+            get
+            {
+                return string.Join("|", languages ?? new List<string>());
+            }
+            set
+            {
+                languages = value?.Split('|').ToList();
+            }
+        }
+        public Speed? Speed { get; set; }
     }
 }
